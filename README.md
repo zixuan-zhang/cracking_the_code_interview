@@ -1,3 +1,6 @@
-@Author: Zixuan Zhang (zixuan.zhang.victor@gmail.com)
-@Date: 	 August 14, 2015
-@Desc:   This repository list all codes of this book.
+/******************************************************************************
+ *  @Author: Zhang Zixuan
+ *  @Email:  zixuan.zhang.victor@gmail.com
+ *  @Blog:   www.noathinker.com
+ *  @Date: 
+ *****************************************************************************/

@@ -1,3 +1,10 @@
+/******************************************************************************
+ *  @Author: Zhang Zixuan
+ *  @Email:  zixuan.zhang.victor@gmail.com
+ *  @Blog:   www.noathinker.com
+ *  @Date: 
+ *****************************************************************************/
+
 /*
 Question: Implement an algorithm to determine if a string has all unique characters  What if you
 	  can not use additional data structures?
