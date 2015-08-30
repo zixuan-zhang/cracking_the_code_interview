@@ -11,9 +11,35 @@
  *
  */
 #include <iostream>
+#include <set>
 #include "utils.h"
 using namespace std;
 
+/*
+ * Solution1:
+ *
+ * 关于这道题的分析，http://www.hawstein.com/posts/2.5.html分析的很好。
+ * 第一种方法是从首节点遍历，保存每个节点的地址。然后，因为链表是存在环的，所以第一个遇到的第二次出现
+ * 的则是环的开始。
+ *
+ */
+
+Node* find_loop_header(Node* header)
+{
+    if (NULL == header)
+        return NULL;
+    set<Node*> node_set;
+    Node* p = header;
+    while (p)
+    {
+        if (node_set.find(p) == node_set.end())
+            node_set.insert(p);
+        else
+            return p;
+        p = p->next();
+    }
+    return NULL; //没有环
+}
 
 /*
  * Solution2:
@@ -66,6 +92,7 @@ int main()
     list.append(new Node(7));
     list.append(temp);
 
+    //temp = find_loop_header(list.header()->next());
     temp = find_loop_header1(list.header()->next());
     cout<<temp->value()<<endl;
     return 0;
