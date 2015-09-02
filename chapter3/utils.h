@@ -12,34 +12,39 @@ class Stack
 private:
     const int MAX_SIZE;
     int* array;
-    int top;
+    int _top;
 
 public:
-    Stack(int maxSize): MAX_SIZE(maxSize)
+    Stack(int maxSize=100): MAX_SIZE(maxSize)
     {
-        top = -1;
+        _top = -1;
         array = new int[MAX_SIZE];
     }
 
     bool push(int value)
     {
-        if (top + 1 == MAX_SIZE)
+        if (_top + 1 == MAX_SIZE)
             return false;
-        array[++top] = value;
+        array[++_top] = value;
         return true;
     }
 
     bool pop(int& value)
     {
-        if (-1 == top)
+        if (-1 == _top)
             return false;
-        value = array[top--];
+        value = array[_top--];
         return true;
+    }
+
+    int top()
+    {
+        return array[_top];
     }
 
     bool empty()
     {
-        if (-1 == top)
+        if (-1 == _top)
             return true;
         return false;
     }
