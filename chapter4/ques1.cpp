@@ -16,142 +16,68 @@
  */
 
 #include <iostream>
-#include <climits>
 #include <cmath>
 #include <algorithm>
+#include <climits>
+#include "utils.h"
 
 using namespace std;
 
-class Node
+
+/*
+ * Solution:
+ *
+ * 这道题的解法就是保存此树的叶子节点的深度的最大值和最小值，然后比较差是否大于1.
+ * 这种方法的好处就是当判断有不符合的话就直接退出而不用把所有的叶子节点都遍历完。
+ */
+bool isBalance(Node* node, int& dMax, int& dMin, int depth)
 {
-private:
-    int data;
-    Node* _left, _right;
-
-public:
-    Node()
-    {
-        _left = _right = NULL;
-    }
-
-    Node(int d)
-    {
-        _left = _right = NULL;
-        data = d;
-    }
-
-    Node* left()
-    {
-        return _left;
-    }
-    
-    Node* right()
-    {
-        return _right;
-    }
-
-    int value()
-    {
-        return data;
-    }
-
-    void set_left(Node* temp)
-    {
-        _left = temp;
-    }
-
-    void set_right(Node* temp)
-    {
-        _right = temp;
-    }
-}
-
-class Tree
-{
-private:
-    Node* _root;
-
-public:
-    Tree()
-    {
-        _root = NULL;
-    }
-
-    Node* root()
-    {
-        return _root;
-    }
-
-    void insert(int data)
-    {
-        if (NULL == _root)
-        {
-            _root = new Node(data);
-        }
-        else
-        {
-            Node* p = _root;
-            while (true)
-            {
-                if ( data < p->value())
-                {
-                    if (NULL == p->left())
-                    {
-                        Node* temp = new Node(data);
-                        p->set_left(temp);
-                        break;
-                    }
-                    else
-                    {
-                        p = p->left();
-                    }
-                }
-                else
-                {
-                    if (NULL == p->right())
-                    {
-                        Node* temp = new Node(data);
-                        p->set_right(temp);
-                        break;
-                    }
-                    else
-                    {
-                        p = p->right();
-                    }
-                }
-            }
-        }
-    }
-}
-
-bool isBalance(Node* node, int& dMin, int& dMax, int depth)
-{
-    if (NULL == node)
+    if (NULL == node->left() && NULL == node->right())
     {
         if (INT_MAX == dMax || INT_MIN == dMin)
         {
-            Max = Min = depth;
+            dMax = dMin = depth;
             return true;
         }
-        if (abs(dMin, depth) > 1 || abs(dMax, depth) > 1)
+        if (abs(dMin-depth) > 1 || abs(dMax-depth) > 1)
+        {
+            dMax = max(dMax, depth);
+            dMin = min(dMin, depth);
             return false;
+        }
         dMax = max(dMax, depth);
         dMin = min(dMin, depth);
         return true;
     }
-    return isBalance(node->left(), dMin, dMax, depth+1) &&
-        isBalance(node->right(), dMin, dMax, depth+1)
+    bool left_result = true;
+    bool right_result = true;
+    if (node->left())
+        left_result = isBalance(node->left(), dMax, dMin, depth+1);
+    if (node->right())
+        right_result = isBalance(node->right(), dMax, dMin, depth+1);
+    return left_result && right_result;
 }
 
 void driver()
 {
+    int array[] = {5, 3, 8, 1, 4, 7, 10, 2, 6, 9, 11, 12};
+    //int array[] = {1, 2, 3, 4};
+    Tree* tree = new Tree();
+    for (int i = 0; i < sizeof(array) / sizeof(int); ++i)
+    {
+        tree->insert(array[i]);
+    }
+    // tree->pre_print(tree->root());
+
+    int dMax = INT_MAX;
+    int dMin = INT_MIN;
+    int depth = 0;
+    bool result = isBalance(tree->root(), dMax, dMin, depth=0);
+    cout<<result<<" "<<dMax<<" "<<dMin<<endl;
 }
 
 int main()
 {
-    int dMax = INT_MAX;
-    int dMin = INT_MIN;
-    int depth = 0;
-    bool result = isBalance(root, dMax, dMin, depth=0);
+    driver();
     return 0;
 }
