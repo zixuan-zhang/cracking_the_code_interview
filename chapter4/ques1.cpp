@@ -23,9 +23,13 @@
 
 using namespace std;
 
-//# define INT_MAX 100000
-//# define INT_MIN -100000
 
+/*
+ * Solution:
+ *
+ * 这道题的解法就是保存此树的叶子节点的深度的最大值和最小值，然后比较差是否大于1.
+ * 这种方法的好处就是当判断有不符合的话就直接退出而不用把所有的叶子节点都遍历完。
+ */
 bool isBalance(Node* node, int& dMax, int& dMin, int depth)
 {
     if (NULL == node->left() && NULL == node->right())
