@@ -122,4 +122,20 @@ public:
             pre_print(root->right());
         }
     }
+
+    Node* find_node(int value)
+    {
+        Node* result = NULL;
+        Node* pointer = _root;
+        while (NULL != pointer)
+        {
+            if (pointer->value() == value)
+                return pointer;
+            if (pointer->value() < value)
+                pointer = pointer->right();
+            else
+                pointer = pointer->left();
+        }
+        return result;
+    }
 };
