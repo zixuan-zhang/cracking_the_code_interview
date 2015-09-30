@@ -19,18 +19,10 @@
  */
 
 #include <iostream>
+#include "utils.h"
 
 using namespace std;
 
-void print_bit(int num)
-{
-    for (int i = 31; i >= 0; --i)
-    {
-        int temp = (num >> i) & 1;
-        cout<<temp<<" ";
-    }
-    cout<<endl;
-}
 
 void transfer(int num1, int num2, int i, int j)
 {
