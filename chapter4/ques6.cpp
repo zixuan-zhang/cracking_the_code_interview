@@ -17,7 +17,6 @@
 
 #include <iostream>
 #include <map>
-
 #include "utils.h"
 
 using namespace std;
