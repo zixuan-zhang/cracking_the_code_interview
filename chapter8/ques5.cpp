@@ -1,54 +1,70 @@
 /*******************************************************************************
- *  @File  : ques5.cpp
+ *  @File  : 022_generate_parentheses.cpp
  *  @Author: Zhang Zixuan
  *  @Email : zixuan.zhang.victor@gmail.com
  *  @Blog  : www.noathinker.com
- *  @Date  : 2015年10月25日 星期日 16时02分41秒
+ *  @Date  : 2015年10月25日 星期日 16时43分02秒
  ******************************************************************************/
 
 /*
  * Question:
  *
- * Implement an algorithm to print all valid (e g , properly opened and closed) combinations of n-pairs of parentheses 
- * EXAMPLE:
- * input: 3 (e g , 3 pairs of parentheses)
- * output: ()()(), ()(()), (())(), ((()))
+ * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+ *
+ * For example, given n = 3, a solution set is:
+ *
+ * "((()))", "(()())", "(())()", "()(())", "()()()"
  *
  */
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-void construct_string(int deep, int num, string& str)
+class Solution
 {
-    if (num == deep)
+public:
+    void _generate(int left, int right, string& str, vector<string>& result)
     {
-        cout<<str<<endl;
-        return ;
+        if (left < 0 || right < left)
+            return;
+        if (left == 0 && right == 0)
+        {
+            result.push_back(str);
+        }
+        else
+        {
+            if (left > 0)
+            {
+                str += "(";
+                _generate(left-1, right, str, result);
+                str.erase(str.length()-1, 1);
+            }
+            if (right > 0)
+            {
+                str += ")";
+                _generate(left, right-1, str, result);
+                str.erase(str.length()-1, 1);
+            }
+        }
     }
-    if ("" == str)
+    vector<string> generateParenthesis(int n)
     {
-        str = "()";
-        construct_string(deep+1, num, str);
-        return ;
+        vector<string> result;
+        if (0 == n)
+            return result;
+        string str = "";
+        _generate(n, n, str, result);
+        return result;
     }
-    string temp = "()";
-    string temp1 = temp.insert(0, str);
-    construct_string(deep+1, num, temp1);
-    temp.erase(0, str.length());
-    string temp2 = temp.insert(1, str);
-    construct_string(deep+1, num, temp2);
-    temp.erase(1, str.length());
-    string temp3 = temp.insert(2, str);
-    if (temp3 != temp1)
-        construct_string(deep+1, num, temp3);
-}
+};
 
 int main()
 {
-    string str = "";
-    construct_string(0, 3, str);
+    Solution s;
+    vector<string> result = s.generateParenthesis(4);
+    cout<<result.size()<<endl;
     return 0;
 }
